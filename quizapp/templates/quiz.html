@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Quiz render</title>
+    </head>
+    <body>
+        <div id="error"></div>
+        <div id="score"></div>
+        <form action="{% url 'save_try' %}" method="post">
+            {% csrf_token %}
+        {% for question in questions %}
+        <div class="question">
+            <p class="q-text" data-id="{{question.id}}">{{question.question_txt}}</p>
+            <ul>
+                {% for ans in question.answer_set.all %}
+                    <li class="ans" style="list-style: none">
+                        <input type="radio" name="answer{{question.id}}" value="{{ans.id}}"/> {{ans.ans_txt}}
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr />
+        </div>
+        {% endfor %}
+        <input id="submit" type="submit" value="Submit" />
+        </form>
+    </body>
+</html>
